@@ -6,7 +6,7 @@
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 // 1) \uc0\u1055 \u1086 \u1089 \u1083 \u1077  \u1076 \u1077 \u1087 \u1083 \u1086 \u1103  Apps Script \u1074 \u1089 \u1090 \u1072 \u1074 \u1100  \u1089 \u1102 \u1076 \u1072  URL:\
-const API_URL = https://script.google.com/macros/s/AKfycbxAIjXCk9kcOOP48zd3mXuDNVu8nsvMrLsa3PxgEviPHQOx0VMDfCmg8NrYNYk_hP_m/exec;\
+const API_URL = https:https://script.google.com/macros/s/AKfycbx_7Hvw6eV67qTS0Ths24i9D6iUjLhtRqjGe04B6FNiLRepnuRHG4Qz1sGrW2ekH4Di/exec;\
 \
 const grid = document.getElementById("formsGrid");\
 const searchInput = document.getElementById("search");\
