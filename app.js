@@ -1,12 +1,21 @@
-// 1) После деплоя Apps Script вставь сюда URL:
+// 1) Вставь сюда реальный URL после деплоя Apps Script как Web App (Execute as: Me, Who has access: Anyone)
 const API_URL = "https://script.google.com/macros/s/AKfycbxAIjXCk9kcOOP48zd3mXuDNVu8nsvMrLsa3PxgEviPHQOx0VMDfCmg8NrYNYk_hP_m/exec";
+
+// Проверка, что URL вставлен
+if (!API_URL || API_URL.includes("PASTE_") || !API_URL.startsWith("https://script.google.com")) {
+  console.error("API_URL не настроен! Вставь реальный URL из Apps Script → Deploy → New deployment → Web app");
+}
 
 const grid = document.getElementById("formsGrid");
 const searchInput = document.getElementById("search");
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, s => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
   }[s]));
 }
 
@@ -45,11 +54,26 @@ function buildField(field, formId) {
 }
 
 function renderForms(filter = "") {
+  if (!grid) {
+    console.error("Элемент #formsGrid не найден!");
+    return;
+  }
+
   grid.innerHTML = "";
+
+  if (!window.FORMS_CONFIG || !Array.isArray(window.FORMS_CONFIG)) {
+    grid.innerHTML = "<p style='color:red'>Ошибка: FORMS_CONFIG не загружен или пустой. Проверь forms-config.js</p>";
+    return;
+  }
 
   const forms = window.FORMS_CONFIG.filter(f =>
     f.title.toLowerCase().includes(filter.toLowerCase())
   );
+
+  if (forms.length === 0) {
+    grid.innerHTML = "<p>Ничего не найдено по вашему запросу</p>";
+    return;
+  }
 
   forms.forEach(form => {
     const fieldsHtml = form.fields.map(field => buildField(field, form.formId)).join("");
@@ -79,6 +103,7 @@ function renderForms(filter = "") {
 function attachHandlers() {
   document.querySelectorAll("form[data-form-id]").forEach(formEl => {
     const statusEl = formEl.querySelector("[data-status]");
+    const submitBtn = formEl.querySelector(".btn-primary");
 
     formEl.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -89,8 +114,19 @@ function attachHandlers() {
         return;
       }
 
+      submitBtn.disabled = true;
+      statusEl.textContent = "⏳ Отправка...";
+      statusEl.className = "status";
+
       const formId = formEl.getAttribute("data-form-id");
       const config = window.FORMS_CONFIG.find(f => f.formId === formId);
+
+      if (!config) {
+        statusEl.textContent = "❌ Конфиг формы не найден";
+        statusEl.className = "status bad";
+        submitBtn.disabled = false;
+        return;
+      }
 
       const payload = {
         formId: config.formId,
@@ -103,32 +139,45 @@ function attachHandlers() {
       config.fields.forEach(field => {
         const id = `${config.formId}_${field.name}`;
         const el = document.getElementById(id);
-        payload.data[field.label] = el.value || "";
+        payload.data[field.label] = el?.value || "";
       });
-
-      statusEl.textContent = "⏳ Отправка...";
-      statusEl.className = "status";
 
       try {
         const res = await fetch(API_URL, {
           method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify(payload)
         });
 
-        const json = await res.json();
+        let json;
+        try {
+          json = await res.json();
+        } catch (e) {
+          throw new Error("Сервер вернул не JSON: " + res.status);
+        }
 
         if (json.ok) {
-          statusEl.textContent = "✅ Отправлено";
+          statusEl.textContent = "✅ Отправлено!";
           statusEl.className = "status ok";
           formEl.reset();
+
+          // Исчезает через 4 секунды
+          setTimeout(() => {
+            statusEl.textContent = "";
+            statusEl.className = "status";
+          }, 4000);
         } else {
-          statusEl.textContent = "❌ Ошибка: " + (json.error || "неизвестно");
+          statusEl.textContent = "❌ " + (json.error || "Ошибка сервера");
           statusEl.className = "status bad";
         }
       } catch (err) {
-        statusEl.textContent = "❌ Ошибка сети/доступа";
+        console.error(err);
+        statusEl.textContent = "❌ Ошибка: " + err.message;
         statusEl.className = "status bad";
+      } finally {
+        submitBtn.disabled = false;
       }
     });
 
@@ -140,8 +189,13 @@ function attachHandlers() {
   });
 }
 
-searchInput.addEventListener("input", (e) => {
-  renderForms(e.target.value);
-});
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => {
+    renderForms(e.target.value);
+  });
+}
 
-renderForms();
+// Запуск при загрузке страницы
+document.addEventListener("DOMContentLoaded", () => {
+  renderForms();
+});
