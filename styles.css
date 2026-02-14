@@ -1,0 +1,154 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 :root \{\
+  --bg: #0b0d12;\
+  --card: #131827;\
+  --text: #e8ecff;\
+  --muted: #a9b2d6;\
+  --accent: #6ea8ff;\
+  --border: rgba(255,255,255,0.08);\
+  --ok: #2dd4bf;\
+  --bad: #fb7185;\
+\}\
+\
+* \{ box-sizing: border-box; \}\
+\
+body \{\
+  margin: 0;\
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;\
+  background: radial-gradient(1200px 600px at 20% 0%, rgba(110,168,255,0.15), transparent 60%),\
+              radial-gradient(900px 500px at 80% 10%, rgba(45,212,191,0.10), transparent 55%),\
+              var(--bg);\
+  color: var(--text);\
+\}\
+\
+.header \{\
+  padding: 28px 18px 10px;\
+  max-width: 1100px;\
+  margin: 0 auto;\
+\}\
+\
+.header h1 \{\
+  margin: 0 0 8px;\
+  font-size: 28px;\
+\}\
+\
+.header p \{\
+  margin: 0;\
+  color: var(--muted);\
+\}\
+\
+.container \{\
+  max-width: 1100px;\
+  margin: 0 auto;\
+  padding: 18px;\
+\}\
+\
+.toolbar \{\
+  display: flex;\
+  gap: 10px;\
+  margin: 12px 0 18px;\
+\}\
+\
+.toolbar input \{\
+  width: 100%;\
+  padding: 12px 14px;\
+  border-radius: 14px;\
+  border: 1px solid var(--border);\
+  background: rgba(255,255,255,0.03);\
+  color: var(--text);\
+  outline: none;\
+\}\
+\
+.grid \{\
+  display: grid;\
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));\
+  gap: 14px;\
+\}\
+\
+.card \{\
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));\
+  border: 1px solid var(--border);\
+  border-radius: 18px;\
+  padding: 14px;\
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);\
+\}\
+\
+.card h2 \{\
+  font-size: 16px;\
+  margin: 0 0 10px;\
+\}\
+\
+.field \{\
+  display: flex;\
+  flex-direction: column;\
+  gap: 6px;\
+  margin-bottom: 10px;\
+\}\
+\
+.field label \{\
+  font-size: 12px;\
+  color: var(--muted);\
+\}\
+\
+.field input, .field textarea, .field select \{\
+  padding: 10px 12px;\
+  border-radius: 12px;\
+  border: 1px solid var(--border);\
+  background: rgba(255,255,255,0.03);\
+  color: var(--text);\
+  outline: none;\
+\}\
+\
+.field textarea \{\
+  min-height: 90px;\
+  resize: vertical;\
+\}\
+\
+.actions \{\
+  display: flex;\
+  gap: 10px;\
+  align-items: center;\
+  margin-top: 8px;\
+  flex-wrap: wrap;\
+\}\
+\
+button \{\
+  border: 0;\
+  padding: 10px 12px;\
+  border-radius: 14px;\
+  cursor: pointer;\
+  font-weight: 600;\
+\}\
+\
+.btn-primary \{\
+  background: var(--accent);\
+  color: #07101e;\
+\}\
+\
+.btn-secondary \{\
+  background: rgba(255,255,255,0.06);\
+  color: var(--text);\
+  border: 1px solid var(--border);\
+\}\
+\
+.status \{\
+  font-size: 12px;\
+  color: var(--muted);\
+\}\
+\
+.status.ok \{ color: var(--ok); \}\
+.status.bad \{ color: var(--bad); \}\
+\
+.footer \{\
+  text-align: center;\
+  padding: 18px;\
+  color: var(--muted);\
+  font-size: 12px;\
+\}\
+}
