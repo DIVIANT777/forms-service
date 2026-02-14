@@ -1,5 +1,5 @@
 // 1) Вставь сюда реальный URL после деплоя Apps Script как Web App (Execute as: Me, Who has access: Anyone)
-const API_URL = "https://script.google.com/macros/s/AKfycbwhTTLINFKMwGepUxlxRaMmFQWjim_HuChc-uwJd8TVcBVwv8e1g8fPzhm4d35AVpAk/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxiBKL7Uja5Xl0-0w6DQLe1MNgd-S0w71xdJ3IB9PuudwKVAuF2HLF3Bj0snMRsBkMd/exec";
 
 // Проверка, что URL вставлен
 if (!API_URL || API_URL.includes("PASTE_") || !API_URL.startsWith("https://script.google.com")) {
