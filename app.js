@@ -1,5 +1,5 @@
 // 1) После деплоя Apps Script вставь сюда URL:
-const API_URL = https://script.google.com/macros/s/AKfycbxAIjXCk9kcOOP48zd3mXuDNVu8nsvMrLsa3PxgEviPHQOx0VMDfCmg8NrYNYk_hP_m/exec;
+const API_URL = "https://script.google.com/macros/s/AKfycbxAIjXCk9kcOOP48zd3mXuDNVu8nsvMrLsa3PxgEviPHQOx0VMDfCmg8NrYNYk_hP_m/exec";
 
 const grid = document.getElementById("formsGrid");
 const searchInput = document.getElementById("search");
